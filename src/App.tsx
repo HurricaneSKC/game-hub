@@ -8,16 +8,18 @@ function App() {
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
       }}
+      templateRows="repeat(2, 1fr)"
+      templateColumns="repeat(8, 1fr)"
     >
-      <GridItem area="nav" bg="coral">
+      <GridItem colSpan={8} area="nav" bg="coral">
         Nav
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside" bg="gold">
+        <GridItem colSpan={2} area="aside" bg="gold">
           Aside
         </GridItem>
       </Show>
-      <GridItem area="main" bg="dodgerblue">
+      <GridItem colSpan={6} area="main" bg="dodgerblue">
         Main
       </GridItem>
     </Grid>
