@@ -16,11 +16,11 @@ function App() {
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem colSpan={2} area="aside" bg="gold">
+        <GridItem colSpan={2} area="aside" bg="">
           Aside
         </GridItem>
       </Show>
-      <GridItem colSpan={6} area="main" bg="dodgerblue">
+      <GridItem colSpan={6} area="main" bg="">
         Main
       </GridItem>
     </Grid>
