@@ -1,4 +1,4 @@
-import getCroppedImageUrl from "../services/image-url";
+import getCroppedImageUrl from "../../services/image-url";
 import CriticScore from "./CriticScore";
 import PlatformIconList from "./PlatformIconList";
 import { Game } from "./useGames";
