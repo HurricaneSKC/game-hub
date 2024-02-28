@@ -1,10 +1,11 @@
-import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Button, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import useGames, { Game } from "./useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
 import { GameQuery } from "../../App";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   gameQuery: GameQuery;
@@ -13,20 +14,24 @@ interface Props {
 const GameGrid = ({ gameQuery }: Props) => {
   // const pageSize = 10;
   // const gameQueryWithPageSize = { ...gameQuery, pageSize };
-  const {
-    data,
-    error,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useGames(gameQuery);
+  const { data, error, isLoading, fetchNextPage, hasNextPage } =
+    useGames(gameQuery);
+  console.log(data);
+
   const skeletons = [1, 2, 3, 4, 5, 6];
 
   if (error) return <Text>{error.message}</Text>;
 
+  const fetchedGamesCount =
+    data?.pages.reduce((total, page) => total + page.results.length, 0) || 0;
+
   return (
-    <Box padding={"10px"}>
+    <InfiniteScroll
+      dataLength={fetchedGamesCount}
+      hasMore={!!hasNextPage}
+      next={() => fetchNextPage()}
+      loader={<Spinner />}
+    >
       <SimpleGrid
         columns={{
           sm: 1,
@@ -35,6 +40,7 @@ const GameGrid = ({ gameQuery }: Props) => {
           xl: 4,
         }}
         spacing={6}
+        padding={"10px"}
       >
         {isLoading &&
           skeletons.map((skeleton) => (
@@ -42,6 +48,7 @@ const GameGrid = ({ gameQuery }: Props) => {
               <GameCardSkeleton />
             </GameCardContainer>
           ))}
+
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.results.map((game) => (
@@ -52,18 +59,7 @@ const GameGrid = ({ gameQuery }: Props) => {
           </React.Fragment>
         ))}
       </SimpleGrid>
-      {hasNextPage && (
-        <Button
-          colorScheme="blue"
-          variant="outline"
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-          marginY={5}
-        >
-          Load More
-        </Button>
-      )}
-    </Box>
+    </InfiniteScroll>
   );
 };
 
