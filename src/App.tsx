@@ -6,7 +6,6 @@ import GenreList from "./components/GenreList/GenreList";
 import PlatformSelector from "./components/PlatformSelector/PlatformSelector";
 import SortSelector from "./components/SortSelector/SortSelector";
 import GameHeading from "./components/GameHeading/GameHeading";
-import useGameQueryStore from "./store/store";
 
 export interface GameQuery {
   genreId?: number;
@@ -21,8 +20,6 @@ function App() {
   //   null
   // );
   // const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
-
-  const { gameQuery } = useGameQueryStore();
 
   return (
     <Grid
@@ -52,7 +49,7 @@ function App() {
           </HStack>
         </Box>
 
-        <GameGrid gameQuery={gameQuery} />
+        <GameGrid />
       </GridItem>
     </Grid>
   );
