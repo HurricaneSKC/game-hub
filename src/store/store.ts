@@ -1,5 +1,11 @@
 import { create } from "zustand"
-import { GameQuery } from "../App"
+
+export interface GameQuery {
+  genreId?: number;
+  platformId?: number;
+  order?: string;
+  searchPhrase?: string;
+}
 
 interface GameQueryStore {
   gameQuery: GameQuery;
